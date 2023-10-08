@@ -1,0 +1,147 @@
+/* # Front-end Style Guide
+
+## Layout
+
+The designs were created to the following widths:
+
+- Mobile: 375px
+- Desktop: 1440px
+
+## Colors
+
+### Primary
+
+- Desaturated Dark Cyan: hsl(180, 29%, 50%)
+
+### Neutral
+
+- Light Grayish Cyan (Background): hsl(180, 52%, 96%)
+- Light Grayish Cyan (Filter Tablets): hsl(180, 31%, 95%)
+- Dark Grayish Cyan: hsl(180, 8%, 52%)
+- Very Dark Grayish Cyan: hsl(180, 14%, 20%)
+
+## Typography
+
+### Body Copy
+
+- Font size: 15px
+
+### Headings
+
+- Family: [League Spartan](https://fonts.google.com/specimen/League+Spartan)
+- Weights: 500, 700
+ */
+html,
+body {
+  margin: 0;
+}
+body {
+  background-color: hsl(180, 52%, 96%);
+  font-family: "League Spartan", sans-serif;
+}
+
+.header {
+  width: 100%;
+  height: 140px;
+  background-image: url(./images/bg-header-desktop.svg);
+  background-color: #5da4a4;
+  background-position: center;
+  background-size: cover;
+}
+
+.container {
+  display: block;
+  max-width: 1110 px;
+  width: auto;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.search {
+  width: 100%;
+  height: auto;
+  min-height: 70px;
+  border-radius: 10px;
+  margin-top: -38px;
+  background-color: white;
+  box-sizing: border-box;
+  box-shadow: 0px 10px 15px -6px rgba(0, 0, 0, 0.5);
+  padding: 40px 20px;
+}
+
+.job-cards {
+  display: grid;
+  row-gap: 25px;
+  margin-top: 36px;
+  width: 100%;
+}
+
+.job-items {
+  width: 100%;
+  height: auto;
+  padding: 35px 40px;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background-color: white;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 0px 10px 15px -6px rgba(0, 0, 0, 0.5);
+}
+
+.items {
+  display: flex;
+  align-items: center;
+}
+
+.jobs-img {
+  width: auto;
+  height: auto;
+}
+
+.jobs-data {
+  margin-left: 20px;
+  height: auto;
+}
+
+.jobs-company {
+  font-size: 14px;
+  color: hsl(180, 29%, 50%);
+  font-weight: 600;
+  display: block;
+}
+
+.jobs-title {
+  margin-top: 15px;
+  font-size: 18px;
+  color: hsl(180, 14%, 20%);
+  font-weight: 700;
+  display: block;
+}
+
+.job-details {
+  padding: 0;
+  margin-top: 15px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.job-details-item {
+  display: inline-block;
+  font-size: 15px;
+  color: hsl(180, 8%, 52%);
+  font-weight: 500;
+}
+
+.dot {
+}
+
+.job-tags {
+  width: auto;
+  height: auto;
+  display: inline-block;
+  border-radius: 10px;
+  background-color: hsl(180, 31%, 95%);
+  padding: 10px 15px;
+}
