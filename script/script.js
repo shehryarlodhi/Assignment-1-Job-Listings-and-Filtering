@@ -3,37 +3,47 @@ const root = $('#root')
 //Adding of filter for specific jobs
 var filter_bar = $("#filter_bar"),
     filters_are = $(".filters");
-let filters = [];//array where Filter terms will be stored
+var filters = [];//array where Filter terms will be stored
+var data=[];
 
 $(document).ready(function (){
 
     $.getJSON("data.json", function (data){
         getJobs(data)
     })
+    
+      // Add a button to open the pop-up for adding a new job
+      const addButton = $("<button id='addJobButton'>Add (+)</button>");
+      addButton.click(openAddJobPopup); // Call the openAddJobPopup function when clicked
+      $("body").append(addButton);
+    
+      // Rest of your existing code...
+    });
+    
 
-})
 
 function AddFilter(filter_name) {
-    filter_bar.css("display", "flex");
+  filter_bar.css("display", "flex");
 
-    if(filters.includes(filter_name) === false){//Prevent user from clicking same item for filter
+  if (!filters.includes(filter_name)) {
+    filters.push(filter_name);
 
-        filters.push(filter_name);
+    console.log(filters);
 
-        console.log(filters)
-
-        filters_are.append(
-            `<li class="`+ filter_name +`">`+ filter_name +` 
-                <button class="close_btn" onclick="RemoveFilter(this)">
-                    <img src="images/icon-remove.svg" alt="remove filter">
-                </button>
-            </li>`)
-
-    }else{
-
-        alert(filter_name + " is already added to the filter");
-
-    }
+    // Properly escape filter_name and create the filter list item
+    const escapedFilterName = filter_name.replace(/\s+/g, "-").toLowerCase();
+    
+    filters_are.append(
+      `<li class="${escapedFilterName}">
+        ${filter_name}
+        <button class="close_btn" onclick="RemoveFilter('${escapedFilterName}')">
+          <img src="images/icon-remove.svg" alt="remove filter">
+        </button>
+      </li>`
+    );
+  } else {
+    alert(filter_name + " is already added to the filter");
+  }
 
     $.getJSON("data.json", function (data){
 
@@ -75,56 +85,209 @@ function AddFilter(filter_name) {
     console.log(filter_name)
 }
 
-function RemoveFilter (filter_array) {
-    console.log(filter_array)
+
+function RemoveFilter(filter_name) {
+    const filterItem = $(`.${filter_name}`);
+
+    // Remove the filter element from the filter bar
+    filterItem.remove();
+
+    // Remove the filter from the 'filters' array
+    const index = filters.indexOf(filter_name);
+    if (index !== -1) {
+        filters.splice(index, 1);
+    }
+
+    // After removing the filter, update the displayed job listings
+    updateJobListings();
 }
 
 
-function getJobs (jobs) {
-    $.each(jobs, function (index, job){
 
-        let card =
-            "<div>" +
-            "<div class='job_card active'>" +
-            "<div class='part_1'>" +
-            "<div class='logo_part'>" +
-            "<img src='"+ job.logo +"' alt='company logo'>" +
-            "</div>" +
-            "<div class='info_part'>" +
-            "<div>" +
-            "<h1 class='company'>"+ job.company +"</h1>" +
-            "<p class='new'>"+ job.new +"</p>" +
-            "<p class='featured'>"+ job.company +"</p>" +
-            "</div>" +
-            "<div>" +
-            "<p class='position'>"+ job.position +"</p>" +
-            "</div>" +
-            `<div>
-                                  <ul>
-                                    <li>`+ job.postedAt +`</li>
-                                    <li>.</li>
-                                    <li>`+ job.contract +`</li>
-                                    <li>.</li>
-                                    <li>`+ job.location +`</li>
-                                  </ul>
-                                </div>` +
-            "</div>" +
-            "</div>" +
-            `<div class="part_2">
-                          <ul class="filters details">
-                            <li><button class="btn" onclick="AddFilter(this.innerText)">`+ job.role +`</button></li>
-                            <li><button class="btn" onclick="AddFilter(this.innerText)">`+ job.level +`</button></li>
-                            `+ $.map(job.languages, function (val, i){
-                return ("<li><button class='btn' onclick='AddFilter(this.innerText)'>"+ val +"</button></li>")
-            }).join(" ") +`
-                            `+ $.map(job.tools, function (val, i){
-                return ("<li><button class='btn' onclick='AddFilter(this.innerText)'>"+ val +"</button></li>")
-            }).join(" ") +`
-                          </ul>
-                        </div>` +
-            "</div>" +
-            "</div>"
-
-        root.append(card)
+function updateJobListings() {
+  // Fetch and filter job listings based on the selected filters
+  const filter_array = data.filter(job =>
+    filters.every(filter => {
+      return (
+        job.role === filter ||
+        job.level === filter ||
+        job.languages.includes(filter) ||
+        job.tools.includes(filter)
+      );
     })
+  );
+
+  // Clear the existing job listings on the page
+  root.empty();
+
+  // Render the filtered job listings
+  getJobs(filter_array);
+}
+
+
+// function getJobs (jobs) {
+//     $.each(jobs, function (index, job){
+
+//         let card =
+//             "<div>" +
+//             "<div class='job_card active'>" +
+//             "<div class='part_1'>" +
+//             "<div class='logo_part'>" +
+//             "<img src='" + job.logo + "' alt='company logo'>" +
+//             "</div>" +
+//             "<div class='info_part'>" +
+//             "<div>" +
+//             "<h1 class='company'>" + job.company + "</h1>" +
+//             "<p class='new'>" + job.new + "</p>" +
+//             "<p class='featured'>" + job.company + "</p>" +
+//             "</div>" +
+//             "<div>" +
+//             "<p class='position'>" + job.position + "</p>" +
+//             "</div>" +
+//             `<div>
+//                                   <ul>
+//                                     <li>`+ job.postedAt + `</li>
+//                                     <li>.</li>
+//                                     <li>`+ job.contract + `</li>
+//                                     <li>.</li>
+//                                     <li>`+ job.location + `</li>
+//                                   </ul>
+//                                 </div>` +
+//             "</div>" +
+//             "</div>" +
+//             `<div class="part_2">
+//                           <ul class="filters details">
+//                             <li><button class="btn" onclick="AddFilter(this.innerText)">`+ job.role + `</button></li>
+//                             <li><button class="btn" onclick="AddFilter(this.innerText)">`+ job.level + `</button></li>
+//                             `+ $.map(job.languages, function (val, i) {
+//                 return ("<li><button class='btn' onclick='AddFilter(this.innerText)'>" + val + "</button></li>")
+//             }).join(" ") + `
+//                             `+ $.map(job.tools, function (val, i) {
+//                 return ("<li><button class='btn' onclick='AddFilter(this.innerText)'>" + val + "</button></li>")
+//             }).join(" ") + `
+//                           </ul>
+//                         </div>` +
+//             "</div>" +
+//             "</div>";
+
+//         root.append(card)
+//     })
+// }
+
+function getJobs(jobs) {
+    $.each(jobs, function (index, job) {
+        const existingCard = $(".job_card").filter(function () {
+            return $(this).find(".company").text() === job.company;
+        });
+
+        // If the job card already exists, skip it
+        if (existingCard.length === 0) {
+            let card =
+                "<div>" +
+                "<div class='job_card active'>" +
+                "<div class='part_1'>" +
+                "<div class='logo_part'>" +
+                "<img src='"+ job.logo +"' alt='company logo'>" +
+                "</div>" +
+                "<div class='info_part'>" +
+                "<div>" +
+                "<h1 class='company'>"+ job.company +"</h1>" +
+                "<p class='new'>"+ job.new +"</p>" +
+                "<p class='featured'>"+ job.company +"</p>" +
+                "</div>" +
+                "<div>" +
+                "<p class='position'>"+ job.position +"</p>" +
+                "</div>" +
+                `<div>
+                    <ul>
+                        <li>`+ job.postedAt +`</li>
+                        <li>.</li>
+                        <li>`+ job.contract +`</li>
+                        <li>.</li>
+                        <li>`+ job.location +`</li>
+                    </ul>
+                </div>` +
+                "</div>" +
+                "</div>" +
+                `<div class="part_2">
+                    <ul class="filters details">
+                        <li><button class="btn" onclick="AddFilter(this.innerText)">`+ job.role +`</button></li>
+                        <li><button class="btn" onclick="AddFilter(this.innerText)">`+ job.level +`</button></li>
+                        `+ $.map(job.languages, function (val, i){
+                            return ("<li><button class='btn' onclick='AddFilter(this.innerText)'>"+ val +"</button></li>")
+                        }).join(" ") +`
+                        `+ $.map(job.tools, function (val, i){
+                            return ("<li><button class='btn' onclick='AddFilter(this.innerText)'>"+ val +"</button></li>")
+                        }).join(" ") +`
+                    </ul>
+                </div>` +
+                "</div>" +
+                "</div>";
+
+            root.append(card);
+        }
+    });
+    
+}
+
+function openAddJobPopup() {
+  const popup = $("<div id='addJobPopup' class='popup'></div>");
+
+  const form = $("<form></form>");
+  form.append("<h2>Add a New Job</h2>");
+
+  form.append("<label for='company'>Company:</label>");
+  form.append("<input type='text' id='company' required>");
+
+  form.append("<label for='position'>Position:</label>");
+  form.append("<input type='text' id='position' required>");
+
+  form.append("<label for='role'>Role:</label>");
+  form.append("<input type='text' id='role' required>");
+
+  form.append("<label for='level'>Level:</label>");
+  form.append("<input type='text' id='level' required>");
+
+  form.append("<label for='languages'>Languages:</label>");
+  form.append("<input type='text' id='languages' placeholder='Comma-separated values'>");
+
+  form.append("<label for='tools'>Tools:</label>");
+  form.append("<input type='text' id='tools' placeholder='Comma-separated values'>");
+
+  form.append("<label for='new'>New Job:</label>");
+  form.append("<input type='checkbox' id='new'>");
+
+  form.append("<button type='submit'>Add Job</button>");
+
+  form.on("submit", function (event) {
+    event.preventDefault();
+
+    const newJob = {
+      company: $("#company").val(),
+      position: $("#position").val(),
+      role: $("#role").val(),
+      level: $("#level").val(),
+      languages: $("#languages").val().split(",").map((language) => language.trim()),
+      tools: $("#tools").val().split(",").map((tool) => tool.trim()),
+      new: $("#new").prop("checked"),
+    };
+
+    // Add validations as needed
+    if (!newJob.company || !newJob.position || !newJob.role || !newJob.level) {
+      alert("Please fill in all required fields (Company, Position, Role, Level).");
+      return;
+    }
+
+    // Add the new job to the data array
+    data.push(newJob);
+
+    // Close the pop-up
+    popup.remove();
+
+    // Update the job listings with the new data
+    updateJobListings();
+  });
+
+  popup.append(form);
+  $("body").append(popup);
 }
