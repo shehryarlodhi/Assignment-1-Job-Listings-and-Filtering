@@ -128,110 +128,59 @@ function updateJobListings() {
 }
 
 
-// function getJobs (jobs) {
-//     $.each(jobs, function (index, job){
 
-//         let card =
-//             "<div>" +
-//             "<div class='job_card active'>" +
-//             "<div class='part_1'>" +
-//             "<div class='logo_part'>" +
-//             "<img src='" + job.logo + "' alt='company logo'>" +
-//             "</div>" +
-//             "<div class='info_part'>" +
-//             "<div>" +
-//             "<h1 class='company'>" + job.company + "</h1>" +
-//             "<p class='new'>" + job.new + "</p>" +
-//             "<p class='featured'>" + job.company + "</p>" +
-//             "</div>" +
-//             "<div>" +
-//             "<p class='position'>" + job.position + "</p>" +
-//             "</div>" +
-//             `<div>
-//                                   <ul>
-//                                     <li>`+ job.postedAt + `</li>
-//                                     <li>.</li>
-//                                     <li>`+ job.contract + `</li>
-//                                     <li>.</li>
-//                                     <li>`+ job.location + `</li>
-//                                   </ul>
-//                                 </div>` +
-//             "</div>" +
-//             "</div>" +
-//             `<div class="part_2">
-//                           <ul class="filters details">
-//                             <li><button class="btn" onclick="AddFilter(this.innerText)">`+ job.role + `</button></li>
-//                             <li><button class="btn" onclick="AddFilter(this.innerText)">`+ job.level + `</button></li>
-//                             `+ $.map(job.languages, function (val, i) {
-//                 return ("<li><button class='btn' onclick='AddFilter(this.innerText)'>" + val + "</button></li>")
-//             }).join(" ") + `
-//                             `+ $.map(job.tools, function (val, i) {
-//                 return ("<li><button class='btn' onclick='AddFilter(this.innerText)'>" + val + "</button></li>")
-//             }).join(" ") + `
-//                           </ul>
-//                         </div>` +
-//             "</div>" +
-//             "</div>";
-
-//         root.append(card)
-//     })
-// }
 
 function getJobs(jobs) {
-    $.each(jobs, function (index, job) {
-        const existingCard = $(".job_card").filter(function () {
-            return $(this).find(".company").text() === job.company;
-        });
+  $.each(jobs, function (index, job) {
+      const existingCard = $(".job_card").filter(function () {
+          return $(this).find(".company").text() === job.company;
+      });
 
-        // If the job card already exists, skip it
-        if (existingCard.length === 0) {
-            let card =
-                "<div>" +
-                "<div class='job_card active'>" +
-                "<div class='part_1'>" +
-                "<div class='logo_part'>" +
-                "<img src='"+ job.logo +"' alt='company logo'>" +
-                "</div>" +
-                "<div class='info_part'>" +
-                "<div>" +
-                "<h1 class='company'>"+ job.company +"</h1>" +
-                "<p class='new'>"+ job.new +"</p>" +
-                "<p class='featured'>"+ job.company +"</p>" +
-                "</div>" +
-                "<div>" +
-                "<p class='position'>"+ job.position +"</p>" +
-                "</div>" +
-                `<div>
-                    <ul>
-                        <li>`+ job.postedAt +`</li>
-                        <li>.</li>
-                        <li>`+ job.contract +`</li>
-                        <li>.</li>
-                        <li>`+ job.location +`</li>
-                    </ul>
-                </div>` +
-                "</div>" +
-                "</div>" +
-                `<div class="part_2">
-                    <ul class="filters details">
-                        <li><button class="btn" onclick="AddFilter(this.innerText)">`+ job.role +`</button></li>
-                        <li><button class="btn" onclick="AddFilter(this.innerText)">`+ job.level +`</button></li>
-                        `+ $.map(job.languages, function (val, i){
-                            return ("<li><button class='btn' onclick='AddFilter(this.innerText)'>"+ val +"</button></li>")
-                        }).join(" ") +`
-                        `+ $.map(job.tools, function (val, i){
-                            return ("<li><button class='btn' onclick='AddFilter(this.innerText)'>"+ val +"</button></li>")
-                        }).join(" ") +`
-                    </ul>
-                </div>` +
-                "</div>" +
-                "</div>";
+      // If the job card already exists, skip it
+      if (existingCard.length === 0) {
+          let card = `
+              <div>
+                  <div class='job_card active'>
+                      <div class='part_1'>
+                          <div class='logo_part'>
+                              <img src='${job.logo}' alt='company logo'>
+                          </div>
+                          <div class='info_part'>
+                              <div>
+                                  <h1 class='company'>${job.company}</h1>
+                                  <p class='new'>${job.new}</p>
+                                  <p class='featured'>${job.company}</p>
+                              </div>
+                              <div>
+                                  <p class='position'>${job.position}</p>
+                              </div>
+                              <div>
+                                  <ul>
+                                      <li>${job.postedAt}</li>
+                                      <li>.</li>
+                                      <li>${job.contract}</li>
+                                      <li>.</li>
+                                      <li>${job.location}</li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="part_2">
+                          <ul class="filters details">
+                              <li><button class="btn role" onclick="AddFilter(this.innerText)">${job.role}</button></li>
+                              <li><button class="btn level" onclick="AddFilter(this.innerText)">${job.level}</button></li>
+                              ${job.languages.map(val => `<li><button class="btn language" onclick="AddFilter('${val}')">${val}</button></li>`).join(' ')}
+                              ${job.tools.map(val => `<li><button class="btn tool" onclick="AddFilter('${val}')">${val}</button></li>`).join(' ')}
+                          </ul>
+                      </div>
+                  </div>
+              </div>`;
 
-            root.append(card);
-        }
-    });
-    
+          root.append(card);
+      }
+  });
 }
+
 
 // ... Your existing code ...
 

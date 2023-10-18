@@ -2,7 +2,6 @@
 
 :root {
   --Desaturated-Dark-Cyan: hsl(180, 29%, 50%);
-
   --Light-Grayish-Cyan-Background: hsl(180, 52%, 96%);
   --Light-Grayish-Cyan-Filter-Tablets: hsl(180, 31%, 95%);
   --Dark-Grayish-Cyan: hsl(180, 8%, 52%);
@@ -19,16 +18,19 @@
 body {
   background-color: var(--Light-Grayish-Cyan-Background);
   position: relative;
+  font-size: 16px;
+  line-height: 1.6;
 }
+
 main {
   margin: auto;
 }
+
 #header {
   background: var(--Desaturated-Dark-Cyan)
     url("../images/bg-header-desktop.svg");
   background-repeat: no-repeat;
   background-size: 100% 100%;
-
   min-height: 8rem;
   width: 100%;
 }
@@ -44,9 +46,9 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   animation: fade 1s 1;
 }
+
 @keyframes fade {
   from {
     opacity: 0.2;
@@ -55,18 +57,20 @@ main {
     opacity: 1;
   }
 }
+
 .filters li {
   list-style-type: none;
   display: inline-block;
-  padding-left: 0.2rem;
+  padding-left: 0.1rem;
   margin-top: 1rem;
   margin-left: 0.5rem;
-  border-radius: 0 5px 5px 0;
+  border-radius: 3px;
   background-color: var(--Light-Grayish-Cyan-Filter-Tablets);
   color: var(--Desaturated-Dark-Cyan);
   font-size: 12px;
   font-weight: 700;
 }
+
 .close_btn {
   background-color: var(--Desaturated-Dark-Cyan);
   border: none;
@@ -75,9 +79,11 @@ main {
   cursor: pointer;
   transition: 0.2s linear;
 }
+
 .close_btn:hover {
   background-color: var(--Very-Dark-Grayish-Cyan);
 }
+
 .close_btn img {
   width: 10px;
   height: 10px;
@@ -93,6 +99,7 @@ main {
   cursor: pointer;
   transition: 0.2s linear;
 }
+
 .clear_btn:hover {
   color: var(--Desaturated-Dark-Cyan);
   text-decoration: underline;
@@ -115,6 +122,7 @@ main {
   border-radius: 3px;
   position: relative;
 }
+
 .job_card.active:before {
   content: "";
   position: absolute;
@@ -132,11 +140,13 @@ main {
   align-items: center;
   align-content: center;
 }
+
 .job_card .part_1 .info_part div:nth-child(1) {
   display: flex;
   align-items: center;
   align-content: center;
 }
+
 .job_card .part_1 .info_part div ul li {
   list-style-type: none;
   display: inline-block;
@@ -147,13 +157,16 @@ main {
   max-width: 60px;
   max-height: auto;
 }
+
 .part_1 .info_part {
   margin-left: 20px;
 }
+
 .company {
   font-size: 15px;
   color: var(--Desaturated-Dark-Cyan);
 }
+
 .new,
 .featured {
   background-color: var(--Desaturated-Dark-Cyan);
@@ -163,6 +176,7 @@ main {
   border-radius: 50px;
   margin-left: 0.5rem;
 }
+
 .featured {
   background-color: var(--Very-Dark-Grayish-Cyan);
   padding: 0.2rem 0.5rem 0.2rem 0.5rem;
@@ -175,6 +189,7 @@ main {
   cursor: pointer;
   transition: 0.2s linear;
 }
+
 .position:hover {
   color: var(--Desaturated-Dark-Cyan);
 }
@@ -182,90 +197,43 @@ main {
 .part_1 .info_part div ul {
   margin-top: 0.5rem;
 }
+
 .part_1 .info_part div ul li {
   color: var(--Dark-Grayish-Cyan);
   font-size: 14px;
 }
 
-#contents_part .part_2 .filters li .btn {
+#contents_part .part_2 .filters .details li .btn {
+  background-color: var(--Your-Button-Background-Color);
+  color: var(--Dark-Grayish-Cyan);
   border: none;
-  background-color: var(--Light-Grayish-Cyan-Background);
-  color: var(--Desaturated-Dark-Cyan);
   border-radius: 5px;
   padding: 0.4rem;
   font-size: 14px;
   cursor: pointer;
   transition: 0.2s linear;
+  /* margin-right: 0.5rem; Add margin for spacing */
 }
-#contents_part .part_2 .filters li .btn:hover {
+
+#contents_part .part_2 .filters .details li .btn:hover {
   color: #fff;
-  background-color: var(--Desaturated-Dark-Cyan);
+  background-color: var(--Very-Dark-Grayish-Cyan);
 }
 
 #footer {
   text-align: center;
   padding: 1rem;
 }
+
 #footer small a {
   text-decoration: none;
   color: black;
   font-weight: 700;
   transition: 0.2s linear;
 }
+
 #footer small a:hover {
   color: var(--Desaturated-Dark-Cyan);
-}
-
-@media (max-width: 800px) {
-  #header {
-    background: var(--Desaturated-Dark-Cyan)
-      url("../images/bg-header-mobile.svg");
-    min-height: 8rem;
-    width: 100%;
-  }
-
-  #filter_bar {
-    margin-top: -30px;
-    left: 6%;
-    width: 90%;
-  }
-  .filters li {
-    margin-top: 1rem;
-    margin-left: 0.5rem;
-  }
-
-  #contents_part {
-    padding: 2rem;
-  }
-  .job_card {
-    flex-direction: column;
-    margin-top: 5rem;
-    align-items: flex-start;
-  }
-  .job_card .part_1 {
-    margin-top: 1rem;
-  }
-  .part_1 .logo_part img {
-    max-width: 40px;
-    height: auto;
-    position: absolute;
-    top: -8%;
-    left: 10%;
-    align-items: left;
-  }
-  .job_card .part_2 {
-    position: relative;
-  }
-  .job_card .part_2:before {
-    content: "";
-    position: absolute;
-    margin: 0 1rem 0 1rem;
-    top: 10%;
-    left: 0;
-    width: 90%;
-    height: 1px;
-    background-color: var(--Dark-Grayish-Cyan);
-  }
 }
 
 /* Popup styles */
@@ -339,4 +307,108 @@ main {
 
 #addJobButton:hover {
   background-color: var(--Very-Dark-Grayish-Cyan);
+}
+
+/* Mobile-Specific Styles (max-width: 800px) */
+@media (max-width: 800px) {
+  body {
+    font-size: 14px; /* Smaller font size for mobile */
+  }
+
+  #header {
+    background: var(--Desaturated-Dark-Cyan)
+      url("../images/bg-header-mobile.svg");
+    min-height: 8rem;
+  }
+
+  #filter_bar {
+    margin-top: -30px;
+    left: 6%;
+    width: 90%;
+  }
+
+  .filters li {
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+  }
+
+  #contents_part {
+    padding: 2rem;
+  }
+
+  .job_card {
+    flex-direction: column;
+    margin-top: 5rem;
+    align-items: flex-start;
+  }
+
+  .job_card .part_1 {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .part_1 .logo_part img {
+    max-width: 40px;
+    height: auto;
+    position: static; /* Remove absolute positioning */
+    margin-right: 10px; /* Add margin for spacing */
+  }
+
+  .job_card .part_2 {
+    position: relative;
+  }
+
+  .job_card .part_2:before {
+    content: "";
+    position: absolute;
+    margin: 0 1rem 0 1rem;
+    top: 10%;
+    left: 0;
+    width: 90%;
+    height: 1px;
+    background-color: var(--Dark-Grayish-Cyan);
+  }
+}
+
+/* Apply styles to buttons in job listings based on their classes */
+.btn {
+  border: none;
+  border-radius: 5px;
+  padding: 0.4rem;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s linear;
+  /* background-color: var(--Desaturated-Dark-Cyan); */
+  /* margin-right: 0.5rem; */
+}
+
+/* Style buttons by type */
+.btn.role {
+  background-color: var(--Role-Button-Background-Color);
+  color: var(--Role-Button-Text-Color);
+}
+
+.btn.level {
+  background-color: var(--Level-Button-Background-Color);
+  color: var(--Level-Button-Text-Color);
+}
+
+.btn.language {
+  background-color: var(--Language-Button-Background-Color);
+  color: var(--Language-Button-Text-Color);
+}
+
+.btn.tool {
+  background-color: var(--Tool-Button-Background-Color);
+  color: var(--Tool-Button-Text-Color);
+}
+.btn:hover {
+  color: #fff;
+  background-color: var(--Desaturated-Dark-Cyan);
+}
+
+.job_card {
+  margin-left: 30px;
+  margin-right: 30px;
 }
