@@ -90,10 +90,6 @@ function clearFilters() {
       const escapedFilterName = filter_name.replace(/\s+/g, "-").toLowerCase();
       const filterItem = $(`.${escapedFilterName}`);
       filterItem.remove();
-      $.getJSON("data.json", function (loadedData) {
-        data = loadedData;
-        updateJobListings(); // Update job listings with the new set of filters
-      });
       const index = filters.indexOf(filter_name);
       if (index !== -1) {
         filters.splice(index, 1);
@@ -103,9 +99,10 @@ function clearFilters() {
         root.empty();
         getJobs(originalData);
       } else {
-        updateJobListings();
+        updateJobListings(); // Update job listings with the new set of filters
       }
     }
+    
     
 
 
@@ -137,6 +134,7 @@ function updateJobListings() {
   // Render the filtered job listings
   getJobs(filter_array);
 }
+
 
 
 
@@ -236,7 +234,7 @@ function openJobDetailsPopup(job) {
 }
 function deleteJob(index) {
   // Find the job card to be removed
-  const jobCard = $(`.job_card[data-index="${index}"]`);
+  const jobCard = $(".job_card").eq(index);
 
   // Remove the job card
   jobCard.remove();
@@ -248,6 +246,8 @@ function deleteJob(index) {
   }
   updateJobListings(); // Refresh the job listings
 }
+
+
 
 
 
